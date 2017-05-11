@@ -1,24 +1,33 @@
-﻿@model IEnumerable<Vidly.Models.Movie> 
-    @{
-        ViewBag.Title = "Movies";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+﻿@model IEnumerable<Vidly.Models.Movie>
+@{
+    ViewBag.Title = "Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-    <h2>Movies</h2>
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Movie</th>
-            </tr>
-        </thead>
+<h2>Movies</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Movie genre</th>
+        </tr>
+    </thead>
 
-        <tbody>
-            @foreach (var movie in Model)
+    <tbody>
+        @foreach (var movie in Model)
             {
-                <tr>
-                    <td>@movie.Name</td>
-                </tr>
-            }
-        </tbody>
+            <tr>
+                <td>@movie.Name</td>
+                <td>@movie.MovieType</td>
+            </tr>
+        }
+    </tbody>
 
-    </table>
+</table>
+<div>
+    @foreach (var movie in Model)
+    {
+        <div>@movie.Name</div>
+
+    }
+</div>
