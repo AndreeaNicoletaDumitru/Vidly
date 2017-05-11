@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,16 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
+        private ApplicationDbContext context;
+
+        public MoviesController()
+        {
+            context = new ApplicationDbContext();
+        }
         // GET: Movies/Random
         public ActionResult Index()
         {
-            var movies = GetMovies();
-
-            return View(movies);
+            return View();
         }
 
         public ActionResult Edit(int id)
@@ -29,15 +34,15 @@ namespace Vidly.Controllers
             return Content(year + "/" + month);
         }
 
-        private IEnumerable<Movie> GetMovies()
+        [HttpPost]
+        public ActionResult Save(Movie movie)
         {
-            return new List<Movie>
-            {
-                new Movie { Id = 1, Name = "Shrek", MovieType = MovieGenreType.Action },
-                new Movie { Id = 2, Name = "Wall-e", MovieType = MovieGenreType.Animate },
-                new Movie { Id = 2, Name = "Black water", MovieType = MovieGenreType.Drama },
-                new Movie { Id = 2, Name = "Timezone", MovieType = MovieGenreType.Horror }
-            };
+            if (movie.Id == 0)
+                context.Movies.Add(movie);
+
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 
